@@ -1,0 +1,4 @@
+This is just my vim files and plugins.
+Plugins are in /bundles dir and
+are submodules pointing to other git repos.
+ 
