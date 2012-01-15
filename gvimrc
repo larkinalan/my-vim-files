@@ -10,7 +10,7 @@ set guioptions-=r                 " Hide right scrollbar
 set guioptions-=L                 " Hide left scrollbar
 set background=dark               " Background.
 set lines=50 columns=118          " Window dimensions.
-colorscheme wombat 				  " mvim color scheme
-highlight ColorColumn ctermbg=red ctermfg=white guibg=#592929
+"colorscheme wombat 				  " mvim color scheme
+"highlight ColorColumn ctermbg=red ctermfg=white guibg=#592929
 
 
