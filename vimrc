@@ -6,7 +6,9 @@
 
 set nocompatible                  " Must come first because it changes other options.
 
-let mapleader=","                 " Change the leader ky from \ to , for macbook keyboard
+" ########################   My settings  ############################
+
+let mapleader=","                 " Change the leader ky from \ to , 
 
 silent! call pathogen#runtime_append_all_bundles()
 
@@ -39,6 +41,8 @@ set ruler                         " Show cursor position.
 
 set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
+nnoremap <silent> <C-l> :nohl<CR><C-l>  " Redraws the screen and removes any search highlighting.
+
 
 set wrap                          " Turn on line wrapping.
 set scrolloff=3                   " Show 3 lines of context around the cursor.
@@ -61,6 +65,8 @@ set cmdheight=2                   " set command windows height
 
 set cursorline                    " highlight current line
 
+au BufRead,BufNewFile *.hdr,*.bdy,*.vw 		setfiletype plsql   " Add  oracle plsql files
+
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
@@ -82,7 +88,7 @@ map <Leader>fb :FufBuffer<cr>
 map <Leader>ft :FufTag<cr>
 
 " PeepOpen mappings 
-nmap <silent> <c-o> :PeepOpen<cr>:   
+map <leader>po :PeepOpen<cr>
 
 " Controversial...swap colon and semicolon for easier commands
 "nnoremap ; :
@@ -102,18 +108,44 @@ autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
 " NerdTree mappings 
 map <leader>nn :NERDTreeToggle<cr>
+map <leader>nf :NERDTreeFind<cr>
 set autochdir
 let NERDTreeChDirMode=2
 let g:NERDTreeWinPos = "left"
+let g:NERDTreeWinSize=80 
+let g:NERDTreeDirArrows=1           "Show arrows   
+let g:NERDTreeQuitOnOpen=1          "Quit after opening a file
 
 " ctags and windows
-let Tlist_WinWidth = 50
 map <leader>ll :TlistToggle<cr>
-let Tagbar_WinWidth = 50
+let Tlist_WinWidth = 80
 map <leader>bb :TagbarToggle<cr>
+let g:tagbar_width = 80
+let g:tagbar_autofocus = 1          " focus on open
+let g:tagbar_autoclose = 1          " close on method select
+let g:tagbar_type_scala = {
+    \ 'ctagstype' : 'Scala',
+    \ 'kinds'     : [
+        \ 'p:packages:1',
+        \ 'V:values',
+        \ 'v:variables',
+        \ 'T:types',
+        \ 't:traits',
+        \ 'o:objects',
+        \ 'a:aclasses',
+        \ 'c:classes',
+        \ 'r:cclasses',
+        \ 'm:methods'
+    \ ]
+\ }
 
-set tags+=tags;/            " got back dir tree until you find a tags file
-"autocommand FileType java set tags+=$HOME/.vim/tags/java.ctags
-"autocommand FileType scala set tags+=$HOME/.vim/tags/scala.ctags
-"map <F8> :$HOME/tags -R --java-kinds=+p --fields=+iaS --extra=+q .<CR>
-"map <F9> :$HOME/tags -R --scala-kinds=+p --fields=+iaS --extra=+q .<CR>
+" ctags
+set tags+=tags;/                          " got back dir tree until you find a tags file
+autocmd FileType java set tags+=$JAVA_HOME/src/tags,$PLAY_HOME/framework/src/tags
+autocmd FileType scala set tags+=$SCALA_HOME/src/tags 
+" Reuild tags for everything under pwd
+map <F10> :!ctags -R -f tags --langmap=sql:+.hdr.bdy.vw --fields=+iaS --extra=+q --exclude=out --exclude=bin --exclude=target --exclude=.svn --exclude=.git <cr>
+
+" javacomplete
+"autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+"inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
