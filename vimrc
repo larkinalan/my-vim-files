@@ -83,32 +83,25 @@ map <leader>tm :tabmove
 
 " File opening plugin
 "map <Leader>t :FuzzyFinderTextMate<Enter>
-map <Leader>ff :FufFile<cr>
-map <Leader>fb :FufBuffer<cr>
+map <Leader>f :FufFile<cr>
+map <Leader>b :FufBuffer<cr>
+map <Leader>bw :FufBufferTagAllWithCursorWord<cr>
 map <Leader>ft :FufTag<cr>
+map <Leader>fw :FufTagWithCursorWord<cr>
+
+" quickfix window
+map <Leader>q :copen<cr>
+map <Leader>qq :cclose<cr>
 
 " PeepOpen mappings 
-map <leader>po :PeepOpen<cr>
-
-" Controversial...swap colon and semicolon for easier commands
-"nnoremap ; :
-"nnoremap : ;
-"vnoremap ; :
-"vnoremap : ;
-
-" Automatic fold settings for specific files. Uncomment to use.
-" autocmd FileType ruby setlocal foldmethod=syntax
-" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
-
-" For the MakeGreen plugin and Ruby RSpec. Uncomment to use.
-"autocmd BufNewFile,BufRead *_spec.rb compiler rspec
+"map <leader>po :PeepOpen<cr>
 
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
 " NerdTree mappings 
-map <leader>nn :NERDTreeToggle<cr>
-map <leader>nf :NERDTreeFind<cr>
+map <leader>n :NERDTreeToggle<cr>
+map <leader>m :NERDTreeFind<cr>
 set autochdir
 let NERDTreeChDirMode=2
 let g:NERDTreeWinPos = "left"
@@ -117,10 +110,10 @@ let g:NERDTreeDirArrows=1           "Show arrows
 let g:NERDTreeQuitOnOpen=1          "Quit after opening a file
 
 " ctags and windows
-map <leader>ll :TlistToggle<cr>
-let Tlist_WinWidth = 80
-map <leader>bb :TagbarToggle<cr>
-let g:tagbar_width = 80
+map <leader>l :TlistToggle<cr>
+let Tlist_WinWidth = 50
+map <leader>o :TagbarToggle<cr>
+let g:tagbar_width = 50
 let g:tagbar_autofocus = 1          " focus on open
 let g:tagbar_autoclose = 1          " close on method select
 let g:tagbar_type_scala = {
@@ -146,6 +139,5 @@ autocmd FileType scala set tags+=$SCALA_HOME/src/tags
 " Reuild tags for everything under pwd
 map <F10> :!ctags -R -f tags --langmap=sql:+.hdr.bdy.vw --fields=+iaS --extra=+q --exclude=out --exclude=bin --exclude=target --exclude=.svn --exclude=.git <cr>
 
-" javacomplete
-"autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-"inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
+" Eclim
+autocmd FileType java :inoremap <buffer> <C-b> <C-X><C-U> 
