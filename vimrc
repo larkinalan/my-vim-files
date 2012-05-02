@@ -126,7 +126,7 @@ let g:NERDTreeWinPos = "left"
 let g:NERDTreeWinSize=80 
 let g:NERDTreeQuitOnOpen=1          "Quit after opening a file
 
-" ctags and windows
+" Tlist and Tagbar 
 map <leader>l :TlistToggle<cr>
 let Tlist_WinWidth = 50
 map <leader>o :TagbarToggle<cr>
