@@ -141,3 +141,17 @@ map <F10> :!ctags -R -f tags --langmap=sql:+.hdr.bdy.vw --fields=+iaS --extra=+q
 
 " Eclim
 autocmd FileType java :inoremap <buffer> <C-b> <C-X><C-U> 
+
+" ctrlp
+"let g:ctrlp_max_height = 30
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_dotfiles = 0
+let g:ctrlp_root_markers = ['.root']
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  'out$\|bin$\|target$\|tmp$', 
+  \ 'file': '.exe$\|.dll$\|.class$\|.jar$\|.ear$\|.war$\|tags$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+                        \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+
