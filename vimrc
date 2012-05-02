@@ -41,7 +41,8 @@ set ruler                         " Show cursor position.
 
 set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
-nnoremap <silent> <C-l> :nohl<CR><C-l>  " Redraws the screen and removes any search highlighting.
+" Redraws the screen to removes any search highlighting then signs
+nnoremap <silent> <C-l> :nohl<cr> :SignClearAll<cr>
 
 
 set wrap                          " Turn on line wrapping.
@@ -61,7 +62,7 @@ set expandtab                     " Use spaces instead of tabs
 
 set laststatus=2                  " Show the status line all the time
 
-set cmdheight=2                   " set command windows height
+"set cmdheight=2                   " set command windows height
 
 set cursorline                    " highlight current line
 
@@ -69,6 +70,10 @@ au BufRead,BufNewFile *.hdr,*.bdy,*.vw 		setfiletype plsql   " Add  oracle plsql
 
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+
+" menu mapping
+map <leader>m :set guioptions+=m<cr>
+map <leader>mm :set guioptions-=m<cr>
 
 " Tab mappings.
 map <leader>tt :tabnew<cr>
@@ -85,9 +90,11 @@ map <leader>tm :tabmove
 "map <Leader>t :FuzzyFinderTextMate<Enter>
 map <Leader>f :FufFile<cr>
 map <Leader>b :FufBuffer<cr>
-map <Leader>bw :FufBufferTagAllWithCursorWord<cr>
-map <Leader>ft :FufTag<cr>
-map <Leader>fw :FufTagWithCursorWord<cr>
+map <Leader>fh :FufHelp<cr>
+map <Leader>bw :FufBufferTagWithCursorWord<cr>
+map <Leader>t :FufTag<cr>
+map <Leader>tw :FufTagWithCursorWord<cr>
+map <Leader>tf :FufTaggedFile<cr>
 
 " quickfix window
 map <Leader>q :copen<cr>
@@ -99,14 +106,23 @@ map <Leader>qq :cclose<cr>
 " Automatically cd into the directory that the file is in
 autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 
+" set search file/dirs to ignore
+let Grep_Skip_Dirs = 'CVS .svn .git out bin target'
+"set wildignore+=tmp\*,out\*,bin\*,target\*,.metadata\*,.settings\*,.svn\*,.git\*,*.o,*.obj,.git,.classpath,*.class,*.jar,*.ear,*.war,*.dll
+"map <Leader>s :vimgrep //gj C:\Strategy\**\*.{java,hdr,bdy,xml,properties}
+"map <Leader>s :Ack --java --html --xml --ignore-dir=out --ignore-dir=target "%" "C:\Strategy\Java"
+map <Leader>s :Ack --ignore-dir=out --ignore-dir=target "text" "dir"
+map <Leader>sr :%s///gc 
+" replace grep with ack
+"set grepprg=ack 
+
 " NerdTree mappings 
 map <leader>n :NERDTreeToggle<cr>
-map <leader>m :NERDTreeFind<cr>
+map <leader>nn :NERDTreeFind<cr>
 set autochdir
 let NERDTreeChDirMode=2
 let g:NERDTreeWinPos = "left"
 let g:NERDTreeWinSize=80 
-let g:NERDTreeDirArrows=1           "Show arrows   
 let g:NERDTreeQuitOnOpen=1          "Quit after opening a file
 
 " ctags and windows
@@ -139,8 +155,14 @@ autocmd FileType scala set tags+=$SCALA_HOME/src/tags
 " Reuild tags for everything under pwd
 map <F10> :!ctags -R -f tags --langmap=sql:+.hdr.bdy.vw --fields=+iaS --extra=+q --exclude=out --exclude=bin --exclude=target --exclude=.svn --exclude=.git <cr>
 
-" Eclim
-autocmd FileType java :inoremap <buffer> <C-b> <C-X><C-U> 
+" Add  oracle plsql files
+au BufRead,BufNewFile *.hdr,*.bdy,*.vw 		setfiletype plsql 
+
+" eclim 
+autocmd FileType java nnoremap <silent> <buffer> <leader>ji :JavaImport<cr>
+autocmd FileType java nnoremap <silent> <buffer> <leader>jd :JavaDocSearch -x declarations<cr>
+autocmd FileType java nnoremap <silent> <buffer> <leader>js :JavaSearchContext<cr>
+inoremap <C-Space> <C-x><C-u>
 
 " ctrlp
 "let g:ctrlp_max_height = 30
