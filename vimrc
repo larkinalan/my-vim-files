@@ -11,6 +11,7 @@ set nocompatible                  " Must come first because it changes other opt
 let mapleader=","                 " Change the leader ky from \ to , 
 
 silent! call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 
 syntax enable                     " Turn on syntax highlighting.
 filetype plugin indent on         " Turn on file type detection.
