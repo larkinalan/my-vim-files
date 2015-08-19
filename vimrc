@@ -5,9 +5,11 @@
 "	  ln -nfs /vim/vimrc .vimrc
 
 set nocompatible                  " Must come first because it changes other options.
+filetype off                      " required!
 
-" ########################   My settings  ############################
 
+" My Settings
+"============
 let mapleader=","                 " Change the leader ky from \ to , 
 
 silent! call pathogen#runtime_append_all_bundles()
